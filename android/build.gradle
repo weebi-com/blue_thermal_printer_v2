@@ -1,0 +1,65 @@
+group = "id.kakzaki.blue_thermal_printer.printer"
+version = "1.0"
+
+buildscript {
+    ext.kotlin_version = '2.0.21' //'1.8.22' // Use the latest stable version
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.1.4")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+
+android {
+    namespace = "id.kakzaki.blue_thermal_printer.printer"
+
+    compileSdk = 34
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        minSdk = 21
+    }
+
+    dependencies {
+
+        implementation 'androidx.core:core-ktx:1.15.0'
+        implementation 'androidx.appcompat:appcompat:1.7.0'
+        implementation 'com.google.android.material:material:1.12.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+        implementation 'androidx.appcompat:appcompat:1.7.0'
+        implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+        implementation "androidx.multidex:multidex:2.0.1"
+        implementation 'com.google.zxing:core:3.4.1'
+        testImplementation("junit:junit:4.13.2")
+        testImplementation("org.mockito:mockito-core:5.0.0")
+    }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+}
