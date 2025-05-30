@@ -1,10 +1,10 @@
-name: printer
+name: blue_thermal_printer
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage: "welcome to printer plugin"
+homepage:
 
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.7.2
   flutter: '>=3.3.0'
 
 dependencies:
@@ -35,8 +35,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: id.kakzaki.blue_thermal_printer.printer
-        pluginClass: PrinterPlugin
+        package: id.kakzaki.blue_thermal_printer
+        pluginClass: BlueThermalPrinterPlugin
+      ios:
+        pluginClass: BlueThermalPrinterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

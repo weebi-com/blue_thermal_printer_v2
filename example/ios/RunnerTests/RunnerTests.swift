@@ -3,7 +3,7 @@ import UIKit
 import XCTest
 
 
-@testable import printer
+@testable import blue_thermal_printer
 
 // This demonstrates a simple unit test of the Swift portion of this plugin's implementation.
 //
@@ -12,7 +12,7 @@ import XCTest
 class RunnerTests: XCTestCase {
 
   func testGetPlatformVersion() {
-    let plugin = PrinterPlugin()
+    let plugin = BlueThermalPrinterPlugin()
 
     let call = FlutterMethodCall(methodName: "getPlatformVersion", arguments: [])
 
