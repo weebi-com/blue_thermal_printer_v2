@@ -20,7 +20,7 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    BlueThermalPrinter blueThermalPrinterPlugin = BlueThermalPrinter();
+    BlueThermalPrinter blueThermalPrinterPlugin = BlueThermalPrinter.instance;
     MockBlueThermalPrinterPlatform fakePlatform = MockBlueThermalPrinterPlatform();
     BlueThermalPrinterPlatform.instance = fakePlatform;
 
