@@ -248,8 +248,9 @@ public class BlueThermalPrinterPlugin
               pendingResult = result;
               break;
             }
+          } else {
+            getBondedDevices(pendingResult);// result
           }
-          getBondedDevices(result);
 
         } catch (Exception ex) {
           result.error("Error", ex.getMessage(), exceptionToString(ex));
