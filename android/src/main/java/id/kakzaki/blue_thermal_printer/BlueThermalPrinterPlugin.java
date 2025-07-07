@@ -447,7 +447,12 @@ public class BlueThermalPrinterPlugin
       list.add(ret);
     }
 
-    result.success(list);
+    if (result != null) {
+      result.success(list);
+    } else {
+      Log.e(TAG, "Result is null");
+    }
+
   }
 
   /**
