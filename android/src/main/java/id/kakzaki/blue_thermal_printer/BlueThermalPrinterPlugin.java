@@ -179,11 +179,11 @@ public class BlueThermalPrinterPlugin
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result rawResult) {
-    // Result result = new MethodResultWrapper(rawResult);
-    pendingResult = rawResult;
+    Result result = new MethodResultWrapper(rawResult);
+    pendingResult = result;
 
     if (mBluetoothAdapter == null && !"isAvailable".equals(call.method)) {
-      pendingResult.error("bluetooth_unavailable", "the device does not have bluetooth", null);
+      result.error("bluetooth_unavailable", "the device does not have bluetooth", null);
       return;
     }
 
@@ -233,22 +233,27 @@ public class BlueThermalPrinterPlugin
             if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(activity,
-                    Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED
+            // ||
+            // ContextCompat.checkSelfPermission(activity,
+            // Manifest.permission.ACCESS_FINE_LOCATION) !=
+            // PackageManager.PERMISSION_GRANTED
+            ) {
 
               ActivityCompat.requestPermissions(activity, new String[] {
                   Manifest.permission.BLUETOOTH_SCAN,
                   Manifest.permission.BLUETOOTH_CONNECT,
+                  // Manifest.permission.ACCESS_FINE_LOCATION,
               }, 1);
 
-              // pendingResult = result;
+              pendingResult = result;
               break;
             }
-          } else {
-            getBondedDevices(pendingResult);
           }
+          getBondedDevices(result);
 
         } catch (Exception ex) {
-          pendingResult.error("Error", ex.getMessage(), exceptionToString(ex));
+          result.error("Error", ex.getMessage(), exceptionToString(ex));
         }
 
         break;
@@ -433,6 +438,11 @@ public class BlueThermalPrinterPlugin
       return;
     }
 
+    if (result == null) {
+      Log.e(TAG, "Result is null");
+      return;
+    }
+
     List<Map<String, Object>> list = new ArrayList<>();
 
     for (BluetoothDevice device : mBluetoothAdapter.getBondedDevices()) {
@@ -441,6 +451,10 @@ public class BlueThermalPrinterPlugin
       ret.put("name", device.getName());
       ret.put("type", device.getType());
       list.add(ret);
+    }
+    if (list.isEmpty()) {
+      result.error("no_bonded_devices", "No bonded devices found", null);
+      return;
     }
 
     if (result != null) {
