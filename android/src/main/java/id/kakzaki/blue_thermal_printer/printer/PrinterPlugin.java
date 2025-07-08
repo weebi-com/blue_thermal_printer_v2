@@ -243,30 +243,18 @@ public class PrinterPlugin implements FlutterPlugin, MethodCallHandler,ActivityA
             if (ContextCompat.checkSelfPermission(activity,
                     Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(activity,
-                            Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(activity,
-                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ) {
 
               ActivityCompat.requestPermissions(activity,new String[]{
                       Manifest.permission.BLUETOOTH_SCAN,
-                      Manifest.permission.BLUETOOTH_CONNECT,
-                      Manifest.permission.ACCESS_FINE_LOCATION,
+                      Manifest.permission.BLUETOOTH_CONNECT
               }, 1);
 
               pendingResult = result;
               break;
             }
           } else {
-            if (ContextCompat.checkSelfPermission(activity,
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED|| ContextCompat.checkSelfPermission(activity,
-                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-              ActivityCompat.requestPermissions(activity,
-                      new String[] { Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_COARSE_LOCATION_PERMISSIONS);
-
-              pendingResult = result;
-              break;
-            }
+            
           }
           getBondedDevices(result);
 
@@ -419,7 +407,8 @@ public class PrinterPlugin implements FlutterPlugin, MethodCallHandler,ActivityA
   public boolean onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
     if (requestCode == REQUEST_COARSE_LOCATION_PERMISSIONS) {
-      if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+      //if (grantResults[0] == PackageManager.PERMISSION_GRANTED) 
+      {
         getBondedDevices(pendingResult);
       } else {
         pendingResult.error("no_permissions", "this plugin requires location permissions for scanning", null);
