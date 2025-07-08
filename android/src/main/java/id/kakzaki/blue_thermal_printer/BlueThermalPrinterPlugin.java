@@ -183,7 +183,7 @@ public class BlueThermalPrinterPlugin
     pendingResult = rawResult;
 
     if (mBluetoothAdapter == null && !"isAvailable".equals(call.method)) {
-      result.error("bluetooth_unavailable", "the device does not have bluetooth", null);
+      pendingResult.error("bluetooth_unavailable", "the device does not have bluetooth", null);
       return;
     }
 
@@ -244,11 +244,11 @@ public class BlueThermalPrinterPlugin
               break;
             }
           } else {
-            getBondedDevices(pendingResult);// result
+            getBondedDevices(pendingResult);
           }
 
         } catch (Exception ex) {
-          result.error("Error", ex.getMessage(), exceptionToString(ex));
+          pendingResult.error("Error", ex.getMessage(), exceptionToString(ex));
         }
 
         break;
