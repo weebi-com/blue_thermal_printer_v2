@@ -407,6 +407,7 @@ public class BlueThermalPrinterPlugin implements FlutterPlugin, ActivityAware,Me
         pendingResult = null;
       }
       return true;
+    }
   }
 
   private void state(Result result) {
