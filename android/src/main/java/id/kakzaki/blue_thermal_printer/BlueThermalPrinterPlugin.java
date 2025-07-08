@@ -397,17 +397,7 @@ public class BlueThermalPrinterPlugin implements FlutterPlugin, ActivityAware,Me
    */
   @Override
   public boolean onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    if (requestCode == REQUEST_COARSE_LOCATION_PERMISSIONS) {
-      //if (grantResults[0] == PackageManager.PERMISSION_GRANTED) 
-//      {
-        getBondedDevices(pendingResult);
-//      } 
-      else {
-        pendingResult.error("no_permissions", "this plugin requires location permissions for scanning", null);
-        pendingResult = null;
-      }
       return true;
-    }
   }
 
   private void state(Result result) {
