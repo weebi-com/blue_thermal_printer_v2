@@ -155,6 +155,7 @@ public class BlueThermalPrinterPlugin
   private static class MethodResultWrapper implements Result {
     private final Result methodResult;
     private final Handler handler;
+    private boolean replied = false; // Add this flag
 
     MethodResultWrapper(Result result) {
       methodResult = result;
@@ -163,11 +164,17 @@ public class BlueThermalPrinterPlugin
 
     @Override
     public void success(final Object result) {
+      if (replied)
+        return; // Prevent multiple replies
+      replied = true;
       handler.post(() -> methodResult.success(result));
     }
 
     @Override
     public void error(@NonNull final String errorCode, final String errorMessage, final Object errorDetails) {
+      if (replied)
+        return; // Prevent multiple replies
+      replied = true;
       handler.post(() -> methodResult.error(errorCode, errorMessage, errorDetails));
     }
 
